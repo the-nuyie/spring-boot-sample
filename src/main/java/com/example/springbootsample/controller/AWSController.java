@@ -2,53 +2,40 @@ package com.example.springbootsample.controller;
 
 import com.example.springbootsample.service.AWSS3Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.CacheControl;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Map;
 
 @RestController
-@RequestMapping("/aws/buckets/")
+@RequestMapping("/sample-api/v1/aws/s3")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class AWSController {
 
+    private static final String MESSAGE_1 = "Uploaded the file successfully";
+    private static final String FILE_NAME = "fileName";
+
     @Autowired
-    private AWSS3Service s3Service;
-
-    @GetMapping("/health")
-    public String getHealthCheck(){
-        return "AWS Controller is ready.";
-    }
-
-    @PostMapping(value = "/{bucketName}")
-    public void createBucket(@PathVariable String bucketName){
-        s3Service.createS3Bucket(bucketName);
-    }
+    AWSS3Service s3Service;
 
     @GetMapping
-    public List<String> listBuckets(){
-        var buckets = s3Service.listBuckets();
-        var names = buckets.stream().map(Bucket::getName).collect(Collectors.toList());
-        return names;
+    public ResponseEntity<Object> findByName(@RequestBody(required = false) Map<String, String> params) {
+        return ResponseEntity
+                .ok()
+                .cacheControl(CacheControl.noCache())
+                .header("Content-type", "application/octet-stream")
+                .header("Content-disposition", "attachment; filename=\"" + params.get(FILE_NAME) + "\"")
+                .body(new InputStreamResource(s3Service.findByName(params.get(FILE_NAME))));
     }
 
-    @DeleteMapping(value = "/{bucketName}")
-    public void deleteBucket(@PathVariable String bucketName){
-        s3Service.deleteBucket(bucketName);
+    @PostMapping
+    public ResponseEntity<Object> save(@RequestParam("file") MultipartFile multipartFile) {
+        s3Service.save(multipartFile);
+        return new ResponseEntity<>(MESSAGE_1, HttpStatus.OK);
     }
-
-    @PostMapping(value = "/{bucketName}/objects")
-    public void createObject(@PathVariable String bucketName, @RequestBody BucketObjectRepresentaion representaion) throws IOException {
-        s3Service.putObject(bucketName, representaion);
-    }
-
-    @GetMapping(value = "/{bucketName}/objects/{objectName}")
-    public File downloadObject(@PathVariable String bucketName, @PathVariable String objectName) throws IOException {
-        s3Service.downloadObject(bucketName, objectName);
-        return new File("./" + objectName);
-    }
-
-    @PatchMapping(value = "/{bucketName}/objects/{objectName}/{bucketSource}")
-    public void moveObject(@PathVariable String bucketName, @PathVariable String objectName, @PathVariable String bucketSource) throws IOException {
-        s3Service.moveObject(bucketName, objectName, bucketSource);
-    }
-
-}
 
 }
