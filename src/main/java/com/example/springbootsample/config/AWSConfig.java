@@ -3,6 +3,7 @@ package com.example.springbootsample.config;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.auth.BasicSessionCredentials;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
@@ -22,6 +23,9 @@ public class AWSConfig {
     @Value("${aws.s3.access.key.secret}")
     private String accessKeySecret;
 
+    @Value("${aws.s3.access.session.token}")
+    private String sessionToken;
+
     @Value("${aws.s3.region.name}")
     private String s3RegionName;
 
@@ -30,7 +34,8 @@ public class AWSConfig {
 
     @Bean
     public AmazonS3 getAmazonS3Client() {
-        final BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(accessKeyId, accessKeySecret);
+        // final BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(accessKeyId, accessKeySecret, sessionToken);
+        final BasicSessionCredentials basicAWSCredentials = new BasicSessionCredentials (accessKeyId, accessKeySecret, sessionToken);
         // Get Amazon S3 client and return the S3 client object
         /*
         return AmazonS3ClientBuilder
