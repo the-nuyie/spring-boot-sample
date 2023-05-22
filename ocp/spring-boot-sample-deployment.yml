@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: spring-boot-sample
+  name: spring-boot-sample
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: spring-boot-sample
+  strategy:
+    activeDeadlineSeconds: 21600
+    recreateParams:
+      timeoutSeconds: 10000
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 100%
+      maxUnavailable: 25%
+      timeoutSeconds: 10000
+      updatePeriodSeconds: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: spring-boot-sample
+    spec:
+      containers:
+        - env:
+            - name: HTTP_PROXY
+              valueFrom:
+                configMapKeyRef:
+                  key: HTTP_PROXY
+                  name: http-proxy
+            - name: HTTPS_PROXY
+              valueFrom:
+                configMapKeyRef:
+                  key: HTTPS_PROXY
+                  name: http-proxy
+            - name: http_proxy
+              valueFrom:
+                configMapKeyRef:
+                  key: http_proxy
+                  name: http-proxy
+            - name: https_proxy
+              valueFrom:
+                configMapKeyRef:
+                  key: https_proxy
+                  name: http-proxy
+          image: >-
+            image-registry.openshift-image-registry.svc:5000/qdoc-dev-axa-kt-th/spring-boot-sample:v1.1
+          imagePullPolicy: IfNotPresent
+          name: spring-boot-sample
+          ports:
+            - containerPort: 8083
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 192m
+              memory: 512Mi
+            requests:
+              cpu: 192m
+              memory: 512Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts: null
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      volumes: null
+  test: false

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: http-proxy
+  namespace: qdoc-dev-axa-kt-th
+data:
+  HTTPS_PROXY: 'http://egress-proxy:8080'
+  HTTP_PROXY: 'http://egress-proxy:8080'
+  NO_PROXY: >-
+    *.axa-kt-th-preprod-mpl-int.pink.ap-southeast-1.aws.openpaas.axa-cloud.com,
+    10.144.64.38, 10.96.23.105
+  http_proxy: 'http://egress-proxy:8080'
+  https_proxy: 'http://egress-proxy:8080'
+  no_proxy: >-
+    *.axa-kt-th-preprod-mpl-int.pink.ap-southeast-1.aws.openpaas.axa-cloud.com,
+    10.144.64.38, 10.96.23.105

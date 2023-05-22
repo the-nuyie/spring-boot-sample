@@ -1,0 +1,20 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: spring-boot-sample
+  namespace: qdoc-dev-axa-kt-th
+  labels:
+    app: spring-boot-sample
+spec:
+  host: >-
+    spring-boot-sample-qdoc-dev-axa-kt-th.axa-kt-th-preprod-mpl-int.scarlet.ap-southeast-1.aws.openpaas.axa-cloud.com
+  to:
+    kind: Service
+    name: spring-boot-sample
+    weight: 100
+  port:
+    targetPort: spring-boot-sample-tcp-8083
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None
