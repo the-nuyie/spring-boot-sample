@@ -22,7 +22,7 @@ public class AWSController {
     @Autowired
     AWSS3Service s3Service;
 
-    @GetMapping
+    @GetMapping("/fineByName")
     public ResponseEntity<Object> findByName(@RequestBody(required = false) Map<String, String> params) {
         return ResponseEntity
                 .ok()
@@ -32,10 +32,15 @@ public class AWSController {
                 .body(new InputStreamResource(s3Service.findByName(params.get(FILE_NAME))));
     }
 
-    @PostMapping
+    @PostMapping("/save")
     public ResponseEntity<Object> save(@RequestParam("file") MultipartFile multipartFile) {
         s3Service.save(multipartFile);
         return new ResponseEntity<>(MESSAGE_1, HttpStatus.OK);
     }
 
+
+    @GetMapping("/health")
+    public String healthCheck(){
+        return "Health is looking fine.";
+    }
 }
