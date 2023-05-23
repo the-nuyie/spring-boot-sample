@@ -6,9 +6,9 @@ metadata:
 spec:
   selector:
     app: spring-boot-sample
-    deployment: spring-boot-sample
+    # deployment: spring-boot-sample
   ports:
-    - name: spring-boot-sample-tcp-8083
+    - name: spring-boot-sample-tcp-8080
       protocol: TCP
-      port: 8083
-      targetPort: 8083
+      port: 8080
+      targetPort: 8080

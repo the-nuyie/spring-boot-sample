@@ -5,9 +5,12 @@ metadata:
   namespace: qdoc-dev-axa-kt-th
   labels:
     app: spring-boot-sample
+    app.kubernetes.io/component: spring-boot-sample
+    app.kubernetes.io/instance: spring-boot-sample
+    app.kubernetes.io/name: spring-boot-sample
+    app.kubernetes.io/part-of: Q-DOC
+    app.openshift.io/runtime-version: '7.7'
     router: internal
-  annotations:
-    openshift.io/host.generated: 'true'
 spec:
   host: >-
     spring-boot-sample-qdoc-dev-axa-kt-th.axa-kt-th-preprod-mpl-int.scarlet.ap-southeast-1.aws.openpaas.axa-cloud.com
@@ -16,7 +19,7 @@ spec:
     name: spring-boot-sample
     weight: 100
   port:
-    targetPort: 8080
+    targetPort: spring-boot-sample-tcp-8083
   tls:
     termination: edge
     insecureEdgeTerminationPolicy: Redirect

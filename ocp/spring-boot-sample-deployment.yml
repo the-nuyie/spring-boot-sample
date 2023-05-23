@@ -54,7 +54,7 @@ spec:
           imagePullPolicy: IfNotPresent
           name: spring-boot-sample
           ports:
-            - containerPort: 8083
+            - containerPort: 8080
               protocol: TCP
           resources:
             limits:
