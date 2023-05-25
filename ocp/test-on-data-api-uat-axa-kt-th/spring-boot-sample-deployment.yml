@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: spring-boot-sample
+  name: spring-boot-sample
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: spring-boot-sample
+  strategy:
+    activeDeadlineSeconds: 21600
+    recreateParams:
+      timeoutSeconds: 10000
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 100%
+      maxUnavailable: 25%
+      timeoutSeconds: 10000
+      updatePeriodSeconds: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: spring-boot-sample
+    spec:
+      volumes:
+        - name: aws-token
+          secret:
+            secretName: api-psp-s3-aws-token
+            defaultMode: 420
+      containers:
+        - env:
+            - name: JAVA_OPTS
+              valueFrom:
+                configMapKeyRef:
+                  key: JAVA_OPTS
+                  name: spring-boot-sample
+            - name: HTTP_PROXY
+              valueFrom:
+                configMapKeyRef:
+                  key: HTTP_PROXY
+                  name: http-proxy
+            - name: HTTPS_PROXY
+              valueFrom:
+                configMapKeyRef:
+                  key: HTTPS_PROXY
+                  name: http-proxy
+            - name: http_proxy
+              valueFrom:
+                configMapKeyRef:
+                  key: http_proxy
+                  name: http-proxy
+            - name: https_proxy
+              valueFrom:
+                configMapKeyRef:
+                  key: https_proxy
+                  name: http-proxy
+          image: >-
+            image-registry.openshift-image-registry.svc:5000/data-api-uat-axa-kt-th/spring-boot-sample:v1.1
+          imagePullPolicy: IfNotPresent
+          name: spring-boot-sample
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 192m
+              memory: 512Mi
+            requests:
+              cpu: 192m
+              memory: 512Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - name: aws-token
+              mountPath: /.aws
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+  test: false
