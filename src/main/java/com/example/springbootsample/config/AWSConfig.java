@@ -34,8 +34,19 @@ public class AWSConfig {
 
     @Bean
     public AmazonS3 getAmazonS3Client() {
+        // ### Method 1 : Use /.aws
+        // Nuy guess ProfileCredentialProvider() is reading /.aws at user's home in OS
+        return AmazonS3ClientBuilder
+                .standard()
+                .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(s3EndPoint, s3RegionName))
+                .withCredentials(new ProfileCredentialsProvider())
+                .build();
+
+
+
+        // ### Method 2 : Use value in application.properties
         // final BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(accessKeyId, accessKeySecret, sessionToken);
-        final BasicSessionCredentials basicAWSCredentials = new BasicSessionCredentials (accessKeyId, accessKeySecret, sessionToken);
+        // final BasicSessionCredentials basicAWSCredentials = new BasicSessionCredentials (accessKeyId, accessKeySecret, sessionToken);
         // Get Amazon S3 client and return the S3 client object
         /*
         return AmazonS3ClientBuilder
@@ -44,17 +55,13 @@ public class AWSConfig {
                 .withRegion(s3RegionName)
                 .build();
         */
-        /* Nuy guess ProfileCredentialProvider() is reading ./aws at user's home in OS
-        return AmazonS3ClientBuilder
-                .standard()
-                .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(s3EndPoint, s3RegionName))
-                .withCredentials(new ProfileCredentialsProvider())
-                .build();
-        */
+        /*
         return AmazonS3ClientBuilder
                 .standard()
                 .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(s3EndPoint, s3RegionName))
                 .withCredentials(new AWSStaticCredentialsProvider(basicAWSCredentials))
                 .build();
+
+        */
     }
 }

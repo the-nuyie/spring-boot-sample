@@ -34,6 +34,11 @@ spec:
             defaultMode: 420
       containers:
         - env:
+            - name: JAVA_OPTS
+              valueFrom:
+                configMapKeyRef:
+                  key: JAVA_OPTS
+                  name: spring-boot-sample
             - name: HTTP_PROXY
               valueFrom:
                 configMapKeyRef:

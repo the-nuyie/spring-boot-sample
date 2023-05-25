@@ -1,6 +1,8 @@
 package com.example.springbootsample.controller;
 
 import com.example.springbootsample.service.AWSS3Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.CacheControl;
@@ -16,6 +18,8 @@ import java.util.Map;
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class AWSController {
 
+    Logger logger = LoggerFactory.getLogger(AWSController.class);
+
     private static final String MESSAGE_1 = "Uploaded the file successfully";
     private static final String FILE_NAME = "fileName";
 
@@ -24,6 +28,8 @@ public class AWSController {
 
     @GetMapping("/fineByName")
     public ResponseEntity<Object> findByName(@RequestBody(required = false) Map<String, String> params) {
+
+        logger.info("START, Params [params="+params+"]");
         return ResponseEntity
                 .ok()
                 .cacheControl(CacheControl.noCache())

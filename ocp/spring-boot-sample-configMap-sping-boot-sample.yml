@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spring-boot-sample
+  namespace: qdoc-dev-axa-kt-th
+data:
+  JAVA_OPTS: >-
+    -XX:+UseSerialGC
+    -XX:+UnlockExperimentalVMOptions
+    -XshowSettings:vm
+    -Djdk.tls.client.protocols=TLSv1.2
+    -Duser.timezone=GMT+7
+    -Dhttp.proxyHost=egress-proxy
+    -Dhttp.proxyPort=8080
+    -Dhttps.proxyHost=egress-proxy
+    -Dhttps.proxyPort=8080
+    -Dhttp.nonProxyHosts=*.vpce-01ad73a99bd415b3c-3awu8laz.s3.ap-southeast-1.vpce.amazonaws.com
