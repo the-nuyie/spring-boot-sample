@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: qdoc-s3-aws-token
+  labels:
+    axa-cloud.com/kind: "aws-rotated-token"
+    axa-cloud.com/target-aws-account-id: "074245326266"
+    axa-cloud.com/short-role-name: "idoc-s3"
+    axa-cloud.com/token-duration-seconds: "3600" # should comply with customer IAM role max session lifetime!
+stringData:
+  external-id: "kt-th-data-api-np01"
