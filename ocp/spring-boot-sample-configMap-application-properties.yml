@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spring-boot-sample-application-properties
+  namespace: qdoc-dev-axa-kt-th
+data:
+  application.properties: >-
+    # AWS S3 Configuration (idoc)
+    
+    aws.s3.access.key.id=ASIARCSK5YW5LWADBPSQ
+    
+    aws.s3.access.key.secret=UAMNroBwxRuWbpQJs+k2QQPuZZ59r+8xwPxctmcR
+    
+    aws.s3.access.session.token=IQoJb3JpZ2luX2VjENL//////////wEaDGV1LWNlbnRyYWwtMSJIMEYCIQCp2pBMg2KVOam9rCxqZs9Ltfqx50m0j/vwXxlVhe85HgIhAIVOPFDAxKm6AW9FXcBuiDzvI1H4jhZHalIUH0+nQZ0OKp8CCPv//////////wEQAxoMMDc0MjQ1MzI2MjY2Igw4zKxyof/8OQ/bk34q8wEQv3UcSRUvoYRTiQWcvRdthJBCNmnbbnan2x1Nx3eub5sD7TuByiWH2112mpEw6W0uT0Nl+PR9IWOhfZ1raUZ8L2GIcbODakNqq0kR5t/QoEPphO5OyM4Eko6g7XwLqZBBp75cdODqypTRE0V1/okzffHQmzydMpIAt7O5IApccqC1WhX44t9r0fe+uVHDcj8KdTCSXtG+K45M2wjp2YATvj5yzDKY0ByAAoyMyPayCglXMZtA2Ty0qllD2e6+9g3gnAxF4CiKBXZlvnf+NTTSxJai7xbK7jGvXnG5sLl/39iAGYNAv0Wu4Z4pVZG9EQcpXS0w8oW7owY6nAE6aQVzw1i9MXBh4i4oW0qM+2saRME8qWo/Mk5uR7ZN+ESRWL2wylS1pUHqebXwxiPfa5xZc5YgcYRnpd5hxM22ULaQ0eOi0PD4bnuwvLX2I2VKLPRZAbvhwybKfV31z88tmeHaPTb57RJdjJ0EKATsulftA6UbCG9vwFjKA0i+uS8Avj6Yk332+v7vRpg9wpe9686MJejWZywGa7E=
+    
+    ## ^ Just keep config to avoid error ######
+    
+    # cloud.aws.credentials.profile-name=default
+    
+    aws.s3.region.name=ap-southeast-1
+    
+    aws.s3.bucket.name=w-kt-th-idoc-np-as1-s301
+    
+    aws.s3.endpoint=https://bucket.vpce-01ad73a99bd415b3c-3awu8laz.s3.ap-southeast-1.vpce.amazonaws.com
+    
+    
+    # BASIC, PROFILE
+    
+    aws.s3.access.mode=PROFILE
+    
+    
+    http.proxy.host=egress-proxy
+    
+    http.proxy.port=8080
+    
+    https.proxy.host=egress-proxy
+    
+    https.proxy.port=8080
+    
+    http.nonProxy.host=bucket.vpce-01ad73a99bd415b3c-3awu8laz.s3.ap-southeast-1.vpce.amazonaws.com

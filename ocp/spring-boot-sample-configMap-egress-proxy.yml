@@ -1,0 +1,11 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: egress-proxy
+  labels:
+    axa-cloud.com/kind: egress-http-proxy
+data:
+  target: external
+  whitelist-domains: npmjs.org;*.docker.com;
+  whitelist-ports-http: '80'
+  whitelist-ports-https: '443'
