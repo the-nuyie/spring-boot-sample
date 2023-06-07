@@ -7,12 +7,8 @@ data:
   HTTPS_PROXY: 'http://egress-proxy:8080'
   HTTP_PROXY: 'http://egress-proxy:8080'
   NO_PROXY: >-
-    *.axa-kt-th-preprod-mpl-int.pink.ap-southeast-1.aws.openpaas.axa-cloud.com,
-    10.144.64.38, 10.96.23.105,
-    *.vpce-01ad73a99bd415b3c-3awu8laz.s3.ap-southeast-1.vpce.amazonaws.com
+    *.axa-kt-th-preprod-mpl-int.pink.ap-southeast-1.aws.openpaas.axa-cloud.com,10.144.64.38,10.96.23.105,*.vpce-01ad73a99bd415b3c-3awu8laz.s3.ap-southeast-1.vpce.amazonaws.com
   http_proxy: 'http://egress-proxy:8080'
   https_proxy: 'http://egress-proxy:8080'
   no_proxy: >-
-    *.axa-kt-th-preprod-mpl-int.pink.ap-southeast-1.aws.openpaas.axa-cloud.com,
-    10.144.64.38, 10.96.23.105,
-    *.vpce-01ad73a99bd415b3c-3awu8laz.s3.ap-southeast-1.vpce.amazonaws.com
+    *.axa-kt-th-preprod-mpl-int.pink.ap-southeast-1.aws.openpaas.axa-cloud.com,10.144.64.38,10.96.23.105,*.vpce-01ad73a99bd415b3c-3awu8laz.s3.ap-southeast-1.vpce.amazonaws.com

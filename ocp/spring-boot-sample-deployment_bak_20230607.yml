@@ -36,6 +36,10 @@ spec:
           configMap:
             name: spring-boot-sample-application-properties
             defaultMode: 420
+        - name: spring-boot-sample-startup-script-vol
+          configMap:
+            name: spring-boot-sample-startup-script
+            defaultMode: 0750
       containers:
         - env:
             - name: JAVA_OPTS
@@ -63,16 +67,6 @@ spec:
                 configMapKeyRef:
                   key: https_proxy
                   name: http-proxy
-            - name: NO_PROXY
-              valueFrom:
-                configMapKeyRef:
-                  key: NO_PROXY
-                  name: http-proxy
-            - name: no_proxy
-              valueFrom:
-                configMapKeyRef:
-                  key: no_proxy
-                  name: http-proxy
           image: >-
             image-registry.openshift-image-registry.svc:5000/qdoc-dev-axa-kt-th/spring-boot-sample:v1.6
           imagePullPolicy: IfNotPresent
@@ -94,6 +88,8 @@ spec:
               mountPath: /.aws
             - name: spring-boot-sample-application-vol
               mountPath: /spring-config
+            - name: spring-boot-sample-startup-script-vol
+              mountPath: /
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       terminationGracePeriodSeconds: 30

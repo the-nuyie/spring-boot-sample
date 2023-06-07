@@ -6,6 +6,6 @@ metadata:
     axa-cloud.com/kind: egress-http-proxy
 data:
   target: external
-  whitelist-domains: npmjs.org;*.docker.com;
+  whitelist-domains: npmjs.org;*.docker.com;*.vpce-01ad73a99bd415b3c-3awu8laz.s3.ap-southeast-1.vpce.amazonaws.com
   whitelist-ports-http: '80'
   whitelist-ports-https: '443'

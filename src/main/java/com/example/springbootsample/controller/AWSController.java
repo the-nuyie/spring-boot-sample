@@ -1,5 +1,6 @@
 package com.example.springbootsample.controller;
 
+import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.example.springbootsample.service.AWSS3Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -26,7 +28,7 @@ public class AWSController {
     @Autowired
     AWSS3Service s3Service;
 
-    @GetMapping("/fineByName")
+    @GetMapping("/findByName")
     public ResponseEntity<Object> findByName(@RequestBody(required = false) Map<String, String> params) {
 
         logger.info("START, Params [params="+params+"]");
@@ -36,6 +38,14 @@ public class AWSController {
                 .header("Content-type", "application/octet-stream")
                 .header("Content-disposition", "attachment; filename=\"" + params.get(FILE_NAME) + "\"")
                 .body(new InputStreamResource(s3Service.findByName(params.get(FILE_NAME))));
+    }
+
+    @GetMapping(value = "/findAll")
+    @ResponseBody
+    public List<S3ObjectSummary> listAllObjects() {
+        List<S3ObjectSummary> list = s3Service.listObjects();
+        logger.info("  listAllObjects()="+list.toString());
+        return list;
     }
 
     @PostMapping("/save")

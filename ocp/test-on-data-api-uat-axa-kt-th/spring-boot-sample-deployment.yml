@@ -60,7 +60,7 @@ spec:
                   key: https_proxy
                   name: http-proxy
           image: >-
-            image-registry.openshift-image-registry.svc:5000/data-api-uat-axa-kt-th/spring-boot-sample:v1.1
+            image-registry.openshift-image-registry.svc:5000/data-api-uat-axa-kt-th/spring-boot-sample:v1.3
           imagePullPolicy: IfNotPresent
           name: spring-boot-sample
           ports:
