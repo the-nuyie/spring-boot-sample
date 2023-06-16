@@ -10,4 +10,4 @@ metadata:
     axa-cloud.com/short-role-name: "idoc-s3"
     axa-cloud.com/token-duration-seconds: "3600" # should comply with customer IAM role max session lifetime!
 stringData:
-  external-id: "czaHavHUHt"
+  external-id: "kt-th-data-api-np01"

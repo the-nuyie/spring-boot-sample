@@ -63,7 +63,8 @@ public class AWSConfig {
 
         AmazonS3 builder = null;
         if ("PROFILE".equals(accessMode)) {
-            logger.info(">>N>> Connecting by ProfileCredential.");
+            logger.info(">>N PROFILE>> Connecting by ProfileCredential.");
+            logger.info(">>N PROFILE>> EndPoint="+s3EndPoint+", Region="+s3RegionName);
             // ### Method 1 : Use /.aws
             // Nuy guess ProfileCredentialProvider() is reading /.aws at user's home in OS
             if(s3EndPoint != null && !"".equals(s3EndPoint)){
@@ -84,9 +85,9 @@ public class AWSConfig {
 
             // ### Method 2 : Use value in application.properties
             if (sessionToken != null && !"".equals(sessionToken)) {
-                logger.info(">>N>> Connecting by BasicCredential.");
-                logger.info(">>N>> AccessKey="+accessKeyId+", Secret="+accessKeySecret+", SessionToken="+sessionToken);
-                logger.info(">>N>> EndPoint="+s3EndPoint+", Region="+s3RegionName);
+                logger.info(">>N BASIC>> Connecting by BasicCredential.");
+                logger.info(">>N BASIC>> AccessKey="+accessKeyId+", Secret="+accessKeySecret+", SessionToken="+sessionToken);
+                logger.info(">>N BASIC>> EndPoint="+s3EndPoint+", Region="+s3RegionName);
                 final BasicSessionCredentials basicSessionCredentials = new BasicSessionCredentials(accessKeyId, accessKeySecret, sessionToken);
                 if(s3EndPoint != null && !"".equals(s3EndPoint)){
                     builder = AmazonS3ClientBuilder
@@ -104,9 +105,9 @@ public class AWSConfig {
                 }
 
             } else {
-                logger.info(">>N>> Connecting by BasicAWSCredentials.");
-                logger.info(">>N>> AccessKey="+accessKeyId+", Secret="+accessKeySecret);
-                logger.info(">>N>> EndPoint="+s3EndPoint+", Region="+s3RegionName);
+                logger.info(">>N BASIC>> Connecting by BasicAWSCredentials.");
+                logger.info(">>N BASIC>> AccessKey="+accessKeyId+", Secret="+accessKeySecret);
+                logger.info(">>N BASIC>> EndPoint="+s3EndPoint+", Region="+s3RegionName);
                 final BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(accessKeyId, accessKeySecret);
                 if(s3EndPoint != null && !"".equals(s3EndPoint)){
                     builder = AmazonS3ClientBuilder
