@@ -62,6 +62,12 @@
             <version>1.12.261</version>
         </dependency>
 
+        <!-- For RandomStringUtils used in FileUtil -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

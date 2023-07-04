@@ -41,6 +41,12 @@ public class AWSConfig {
     @Value("${aws.s3.access.mode}")
     private String accessMode;
 
+    @Value("${aws.s3.bucket.name}")
+    private String bucketName;
+
+    @Value("${aws.s3.bucket.directory}")
+    private String bucketDirectory;
+
     @Value("${https.proxy.host}")
     private String proxyHost;
 
@@ -128,5 +134,19 @@ public class AWSConfig {
             }
         }
         return builder;
+    }
+
+    public String getBucketDirectory() {
+        return bucketDirectory;
+    }
+    public void setBucketDirectory(String bucketDirectory) {
+        this.bucketDirectory = bucketDirectory;
+    }
+
+    public String getBucketName() {
+        return bucketName;
+    }
+    public void setBucketName(String bucketName) {
+        this.bucketName = bucketName;
     }
 }

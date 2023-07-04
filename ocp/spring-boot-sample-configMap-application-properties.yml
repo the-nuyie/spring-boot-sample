@@ -5,6 +5,15 @@ metadata:
   namespace: qdoc-dev-axa-kt-th
 data:
   application.properties: >-
+    # Storage Config
+    
+    # LOCAL, S3
+    
+    storage.mode=S3
+    
+    storage.path=/some-local-path/Files-Upload
+    
+    
     # AWS S3 Configuration (idoc)
   
     aws.s3.access.key.id=AKIA4F7JUMR7RAPJXRZ3
@@ -25,6 +34,8 @@ data:
     #P aws.s3.bucket.name=w-kt-th-idoc-np-as1-s301
     
     aws.s3.bucket.name=w-kt-th-idoc-interim-np-as1-s301
+    
+    aws.s3.bucket.directory=poc-nuy/
     
     #L aws.s3.bucket.name=qdoc-poc-bucket
     

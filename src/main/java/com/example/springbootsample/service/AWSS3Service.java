@@ -6,6 +6,9 @@ import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
+import com.example.springbootsample.config.AWSConfig;
+import com.example.springbootsample.dto.FileStorageResponse;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +33,8 @@ public class AWSS3Service {
     @Autowired
     private AmazonS3 amazonS3;
 
-    @Value("${aws.s3.bucket.name}")
-    private String s3BucketName;
+    @Autowired
+    private AWSConfig awsConfig;
 
     private File convertMultiPartFileToFile(final MultipartFile multipartFile) {
         final File file = new File(multipartFile.getOriginalFilename());
@@ -48,28 +51,44 @@ public class AWSS3Service {
     @Async
     public S3ObjectInputStream findByName(String fileName) {
         LOG.info("Downloading file with name {}", fileName);
-        return amazonS3.getObject(s3BucketName, fileName).getObjectContent();
+        return amazonS3.getObject(awsConfig.getBucketName(), fileName).getObjectContent();
     }
 
     public List<S3ObjectSummary> listObjects(){
-        ObjectListing objectListing = amazonS3.listObjects(s3BucketName);
+        ObjectListing objectListing = amazonS3.listObjects(awsConfig.getBucketName());
         return objectListing.getObjectSummaries();
     }
 
     @Async
-    public void save(final MultipartFile multipartFile) {
+    public FileStorageResponse save(final MultipartFile multipartFile) {
+        FileStorageResponse response = new FileStorageResponse();
         try {
-            final File file = convertMultiPartFileToFile(multipartFile);
-            final String fileName = LocalDateTime.now() + "_" + file.getName();
+            File file = convertMultiPartFileToFile(multipartFile);
+            long size = multipartFile.getSize();
+            String fileCode = RandomStringUtils.randomAlphanumeric(8);
+            // final String fileName = LocalDateTime.now() + "_" + file.getName();
+            String fileName = awsConfig.getBucketDirectory() + fileCode + "_" + file.getName();
             LOG.info("Uploading file with name {}", fileName);
-            final PutObjectRequest putObjectRequest = new PutObjectRequest(s3BucketName, fileName, file);
+            PutObjectRequest putObjectRequest = new PutObjectRequest(awsConfig.getBucketName(), fileName, file);
             amazonS3.putObject(putObjectRequest);
-            Files.delete(file.toPath()); // Remove the file locally created in the project folder
+
+            LOG.info("Uploaded file with name {}", fileName);
+
+            //1 Files.delete(file.toPath()); // Remove the file locally created in the project folder
+
+            response.setFileName(fileName);
+            response.setSize(size);
+            response.setDownloadUri("/downloadFile/" + fileName);
+
+            LOG.info("Set response done.");
+
         } catch (AmazonServiceException e) {
             LOG.error("Error {} occurred while uploading file", e.getLocalizedMessage());
-        } catch (IOException ex) {
-            LOG.error("Error {} occurred while deleting temporary file", ex.getLocalizedMessage());
         }
+        //1 catch (IOException ex) {
+        //1     LOG.error("Error {} occurred while deleting temporary file", ex.getLocalizedMessage());
+        //1 }
+        return response;
     }
 
 }
