@@ -10,6 +10,8 @@ RUN apk add --update \
 
 RUN mkdir /.aws
 RUN mkdir /spring-config
+RUN mkdir /Temp-Merge-File
+RUN chmod 755 /Temp-Merge-File
 
 COPY target/spring-boot-sample.jar spring-boot-sample.jar
 COPY src/main/resources/application.properties /spring-config/application.properties

@@ -16,6 +16,8 @@ public class StorageConfig {
     @Value("${storage.path}")
     private String storagePath;
 
+    @Value("${storage.temp.directory}")
+    private String storageTempDirectory;
 
     public String getStorageMode() {
         return storageMode;
@@ -30,4 +32,7 @@ public class StorageConfig {
     public void setStoragePath(String storagePath) {
         this.storagePath = storagePath;
     }
+
+    public String getStorageTempDirectory() { return storageTempDirectory; }
+    public void setStorageTempDirectory(String storageTempDirectory) { this.storageTempDirectory = storageTempDirectory; }
 }

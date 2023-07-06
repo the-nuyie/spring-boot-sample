@@ -74,7 +74,7 @@ spec:
                   key: no_proxy
                   name: http-proxy
           image: >-
-            image-registry.openshift-image-registry.svc:5000/qdoc-dev-axa-kt-th/spring-boot-sample:v1.6
+            image-registry.openshift-image-registry.svc:5000/qdoc-dev-axa-kt-th/spring-boot-sample:v1.8
           imagePullPolicy: IfNotPresent
           name: spring-boot-sample
           ports:

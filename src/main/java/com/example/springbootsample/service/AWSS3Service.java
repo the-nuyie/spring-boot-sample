@@ -7,6 +7,7 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.example.springbootsample.config.AWSConfig;
+import com.example.springbootsample.config.StorageConfig;
 import com.example.springbootsample.dto.FileStorageResponse;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
@@ -36,8 +37,11 @@ public class AWSS3Service {
     @Autowired
     private AWSConfig awsConfig;
 
+    @Autowired
+    private StorageConfig storageConfig;
+
     private File convertMultiPartFileToFile(final MultipartFile multipartFile) {
-        final File file = new File(multipartFile.getOriginalFilename());
+        final File file = new File(storageConfig.getStorageTempDirectory()+multipartFile.getOriginalFilename());
         try (final FileOutputStream outputStream = new FileOutputStream(file)) {
             outputStream.write(multipartFile.getBytes());
         } catch (IOException e) {
